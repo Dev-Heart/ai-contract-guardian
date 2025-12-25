@@ -28,10 +28,13 @@ def process_contract(text: str, api_key: str = None):
             prompt_description=description,
             output_schema=ContractAnalysis,
             api_key=key,
-            model_id="gemini-1.5-flash", # Default to a fast, capable model
-            fence_output=True # Good practice for structured output
+            model_id="gemini-1.5-flash", 
+            fence_output=True 
         )
         return result
     except Exception as e:
-        print(f"Extraction Error: {e}")
-        return None
+        # Capture and log detailed error for debugging
+        error_msg = f"LangExtract Error Type: {type(e).__name__} | Error Details: {str(e)}"
+        print(error_msg)
+        # We can also store this in st.session_state if we want to show it in UI
+        return {"error": error_msg}
